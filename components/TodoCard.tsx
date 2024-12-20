@@ -2,7 +2,16 @@ import { Grid } from "@mui/material";
 import { CardItem } from "@/service/AxilosList";
 import TodoThingsCard from "./TodoThingsCard";
 
-export function ToDoCard({ todos, changeStatus, editTitle, todoCancel, updateCategory, category }: any) {
+interface ToDoCardProps {
+    todos: CardItem[];
+    changeStatus: (id: number, status: boolean) => void;
+    editTitle: (id: number, title: string) => void;
+    todoCancel: (id: number) => void;
+    updateCategory: (id: number, state: "Urgent" | "Important" | "Upcoming" | "Finished" | "Unidentified") => void;
+    category: "All" | "Urgent" | "Important" | "Upcoming" | "Finished" | "Unidentified";
+}
+
+export function ToDoCard({ todos, changeStatus, editTitle, todoCancel, updateCategory, category }: ToDoCardProps) {
     const filteredTodos = (category: string) => {
         if (category === "All") return todos;
         return todos.filter((todo: CardItem) => todo.state === category);

@@ -7,11 +7,9 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 export default function Home() {
   const [todos, setTodos] = useState<CardItem[]>([]);
   const [newTodoTitle, setNewTodoTitle] = useState<string>("");
-  const [newTodoState, setNewTodoState] = useState<
-    "Urgent" | "Important" | "Upcoming" | "Finished" | "Unidentified"
-  >("Unidentified");
+  const [newTodoState, setNewTodoState] = useState<"Urgent" | "Important" | "Upcoming" | "Finished" | "Unidentified">("Unidentified");
   const [isPopup, setIsPopup] = useState<boolean>(false);
-  const [value, setValue] = useState("All");
+  const [value, setValue] = useState<"All" | "Urgent" | "Important" | "Upcoming" | "Finished" | "Unidentified">("All");
 
   useEffect(() => {
     fetchTodos()
@@ -42,7 +40,7 @@ export default function Home() {
   };
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
+    setValue(newValue as "All" | "Urgent" | "Important" | "Upcoming" | "Finished" | "Unidentified");
   };
 
   const changeStatus = (id: number, status: boolean) => {
@@ -96,7 +94,7 @@ export default function Home() {
               editTitle={editTitle}
               todoCancel={todoCancel}
               updateCategory={updateCategory}
-              category={category}
+              category={value}
             />
           </TabPanel>
         ))}
@@ -124,19 +122,10 @@ export default function Home() {
             <MenuItem value="Unidentified">Unidentified</MenuItem>
           </Select>
           <Box>
-            <Button
-              variant="contained"
-              onClick={todoCreate}
-              sx={{ mr: 1 }}
-              size="small"
-            >
+            <Button variant="contained" onClick={todoCreate} sx={{ mr: 1 }} size="small">
               OK
             </Button>
-            <Button
-              onClick={() => setIsPopup(false)}
-              color="error"
-              size="small"
-            >
+            <Button onClick={() => setIsPopup(false)} color="error" size="small">
               Cancel
             </Button>
           </Box>
